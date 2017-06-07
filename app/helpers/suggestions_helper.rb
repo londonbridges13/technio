@@ -278,6 +278,13 @@ module SuggestionsHelper
     puts removing.count
   end
 
+  def tags_to_topic(array, t)
+    array.each do |a|
+      tag = Tag.find_or_create_by(title: a)
+      tag.save
+      t.tags.push tag
+    end
+  end
 
 
 end
