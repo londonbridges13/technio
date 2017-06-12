@@ -12,6 +12,7 @@ task :ping do
     Net::HTTP.get_response(uri)
 
     puts "success..."
+    ContentWorker.perform_async(id) # automatically adds new content
   end
 end
 # end
