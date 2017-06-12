@@ -101,7 +101,7 @@ module ResourcesHelper
 
       x_days = 30
       # Grab content from the last 30 days
-      articles = topic.articles.where('article_date > ?', x_days.days.ago)
+      articles = topic.articles.where('article_date > ?', x_days.days.ago).where(:publish_it => true)
 
       potential_channels = []
       articles.each do |a|
