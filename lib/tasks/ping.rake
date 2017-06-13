@@ -17,7 +17,7 @@ task :ping  => :environment do
       c.last_new_article_grab_date = "#{Time.now - 1.day}"
       c.save
     end
-    ContentWorker.perform_async(id) # automatically adds new content
+    ContentWorker.perform_async("id") # automatically adds new content
   end
 end
 # end
