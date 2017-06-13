@@ -2,7 +2,7 @@ require 'net/http'
 
 # namespace :ping do
 #   desc "Ping our heroku dyno every 10, 60 or 3600 min"
-task :ping do  => :environment do 
+task :ping  => :environment do 
   puts "Making the attempt to ping the dyno"
 
   if ENV['URL']
