@@ -12,6 +12,11 @@ task :ping do
     Net::HTTP.get_response(uri)
 
     puts "success..."
+    unless ContentManagement.first
+      c = ContentManagement.new 
+      c.last = "#{Time.now}"
+      c.save
+    end
     ContentWorker.perform_async(id) # automatically adds new content
   end
 end
