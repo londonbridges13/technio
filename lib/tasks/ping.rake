@@ -2,7 +2,7 @@ require 'net/http'
 
 # namespace :ping do
 #   desc "Ping our heroku dyno every 10, 60 or 3600 min"
-task :ping  => :environment do 
+task :ping  => :environment do
   puts "Making the attempt to ping the dyno"
 
   if ENV['URL']
@@ -14,7 +14,7 @@ task :ping  => :environment do
     puts "success..."
     unless ContentManagement.first
       c = ContentManagement.new
-      c.last = "#{Time.now - 1.day}"
+      c.last_new_article_grab_date = "#{Time.now - 1.day}"
       c.save
     end
     ContentWorker.perform_async(id) # automatically adds new content
