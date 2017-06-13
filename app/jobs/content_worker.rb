@@ -8,27 +8,27 @@ class ContentWorker
 
   def perform(none)
     ActiveRecord::Base.connection_pool.with_connection do
-      topics = Topic.all
+      channels = Resource.all
       @cm = ContentManagement.first
       @count = 0
       a_day_ago = Time.now - 1.day
       if a_day_ago > @cm.updated_at
-        topics.each do |topic|
-          if topic
+        channels.each do |channel|
+          if channel
             puts "Checking for new articles"
-            find_new_articles_from_topic(topic)
-            topic.suggestions.each do |s|
-              # assess suggestions
-              p "Assessing Suggestion: #{s.id}"
-              # automatic_publishing s
-            end
+            find_new_articles_from_channel(channel)
+            # channel.suggestions.each do |s| # with channel its not possible
+            #   # assess suggestions
+            #   p "Assessing Suggestion: #{s.id}"
+            #   # automatic_publishing s
+            # end
             @count += 1
           else
             puts "No Topic"
           end
         end
         # done with search, update ContentManagement time
-        if @count >= Topic.all.count
+        if @count >= channels.count
           @cm.last_new_article_grab_date = "#{Time.now}"
           @cm.save
         else
@@ -52,6 +52,12 @@ class ContentWorker
           check_resource(r)
         end
       end
+
+      def find_new_articles_from_channel(channel)
+          check_resource(channel)
+      end
+
+
 
       def check_resource(resource) #should be the same as ArticlesHelper
         if resource.resource_type == "error"
