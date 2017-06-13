@@ -13,8 +13,8 @@ task :ping do
 
     puts "success..."
     unless ContentManagement.first
-      c = ContentManagement.new 
-      c.last = "#{Time.now}"
+      c = ContentManagement.new
+      c.last = "#{Time.now - 1.day}"
       c.save
     end
     ContentWorker.perform_async(id) # automatically adds new content
